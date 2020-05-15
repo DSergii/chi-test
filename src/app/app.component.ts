@@ -5,6 +5,9 @@ import { Loan } from './models/loan.model';
 import { map } from 'rxjs/internal/operators';
 import { InvestModalComponent } from './modals/invest-modal/invest-modal.component';
 import { MatDialog } from '@angular/material';
+import { Store } from '@ngrx/store';
+import { AppState } from './models/app-state.model';
+import { LoanInvestAction } from './store/actions/loan.actions';
 
 @Component({
   selector: 'app-root',
@@ -18,16 +21,18 @@ export class AppComponent {
 
   constructor(
     private loanService: LoanService,
+    private store: Store<AppState>,
     private dialog: MatDialog,
   ) {
-    this.loans$ = this.loanService.getLoans()
-      .pipe(
-        map(value => {
-          const loans =  value['loans'];
-          loans.forEach(item => this.total += parseInt(item.amount));
-          return loans;
-        })
-      );
+    // this.loans$ = this.loanService.getLoans()
+    //   .pipe(
+    //     map(value => {
+    //       const loans =  value['loans'];
+    //       loans.forEach(item => this.total += parseInt(item.amount));
+    //       return loans;
+    //     })
+    //   );
+    this.loans$ = this.store.select(store => {this.total = 0; store.loans.forEach(item => this.total += parseInt(item.amount)); return store.loans});
   }
 
   invest(item: Loan): void {
@@ -38,12 +43,12 @@ export class AppComponent {
 
     dialogRef.afterClosed().subscribe(invest => {
       if(invest) {
-        console.log( 'item ::: ', item );
         item = {
           ...item,
           amount: (item.amount) as number - invest,
           invested: true
-        }
+        };
+        this.store.dispatch(new LoanInvestAction(item))
       }
     });
   }

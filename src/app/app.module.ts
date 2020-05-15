@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { InvestModalComponent } from './modals/invest-modal/invest-modal.component';
 import { AmountFormatPipe } from './pipes/amount-format.pipe';
+import { StoreModule } from '@ngrx/store';
+import { LoanReducer } from './store/reducers/loan.redusers';
 
 const materialModules = [
   MatCardModule,
@@ -26,6 +28,9 @@ const materialModules = [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    StoreModule.forRoot({
+      loans: LoanReducer
+    }),
     ...materialModules
   ],
   providers: [],

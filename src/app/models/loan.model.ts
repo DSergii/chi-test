@@ -6,6 +6,6 @@ export interface Loan {
   annualised_return: string;
   term_remaining: string;
   ltv: string;
-  amount: string | number;
+  amount: any;
   invested?: boolean;
 }
