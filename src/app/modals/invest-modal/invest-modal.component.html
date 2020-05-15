@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Invest in Loan</h1>
+<strong class="title">{{data.title}}</strong>
+<div mat-dialog-content>
+  <p>Amount available: &#163;{{data.amount | amountFormat}}</p>
+  <p>Loan ends in: </p>
+  <div class="action-box">
+    <mat-form-field>
+      <mat-label>Investment amount (&#163;)</mat-label>
+      <input type="number" #amount matInput>
+    </mat-form-field>
+    <button mat-raised-button [mat-dialog-close]="amount.value">Invest</button>
+  </div>
+</div>

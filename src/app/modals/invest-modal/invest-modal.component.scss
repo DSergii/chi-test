@@ -1,0 +1,15 @@
+:host {
+  h1.mat-dialog-title {
+    margin-bottom: 4px;
+    line-height: 24px;
+  }
+  .title {
+    font-weight: normal;
+  }
+  .action-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+  }
+}
