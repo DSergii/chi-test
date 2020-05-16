@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { LoanService } from './services/loan.service';
 import { Observable } from 'rxjs';
 import { Loan } from './models/loan.model';
-import { map } from 'rxjs/internal/operators';
 import { InvestModalComponent } from './modals/invest-modal/invest-modal.component';
 import { MatDialog } from '@angular/material';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from './models/app-state.model';
 import { LoanInvestAction } from './store/actions/loan.actions';
+import { getTotal } from './store/reducers/loan.redusers';
 
 @Component({
   selector: 'app-root',
@@ -17,22 +16,14 @@ import { LoanInvestAction } from './store/actions/loan.actions';
 export class AppComponent {
 
   loans$: Observable<Loan[]>;
-  total: number = 0;
+  total$: Observable<number>;
 
   constructor(
-    private loanService: LoanService,
     private store: Store<AppState>,
     private dialog: MatDialog,
   ) {
-    // this.loans$ = this.loanService.getLoans()
-    //   .pipe(
-    //     map(value => {
-    //       const loans =  value['loans'];
-    //       loans.forEach(item => this.total += parseInt(item.amount));
-    //       return loans;
-    //     })
-    //   );
-    this.loans$ = this.store.select(store => {this.total = 0; store.loans.forEach(item => this.total += parseInt(item.amount)); return store.loans});
+    this.loans$ = this.store.select(store => store.loans);
+    this.total$ = store.pipe(select(getTotal()));
   }
 
   invest(item: Loan): void {

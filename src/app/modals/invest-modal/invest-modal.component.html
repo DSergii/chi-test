@@ -2,7 +2,7 @@
 <strong class="title">{{data.title}}</strong>
 <div mat-dialog-content>
   <p>Amount available: &#163;{{data.amount | amountFormat}}</p>
-  <p>Loan ends in: </p>
+  <p>Loan ends in: {{data.term_remaining | remainingConvert}}</p>
   <div class="action-box">
     <mat-form-field>
       <mat-label>Investment amount (&#163;)</mat-label>

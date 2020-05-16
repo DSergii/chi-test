@@ -4,11 +4,15 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import {
+  MAT_DIALOG_DATA, MatButtonModule, MatCardModule, MatDialogModule, MatDialogRef, MatFormFieldModule,
+  MatInputModule
+} from '@angular/material';
 import { InvestModalComponent } from './modals/invest-modal/invest-modal.component';
 import { AmountFormatPipe } from './pipes/amount-format.pipe';
 import { StoreModule } from '@ngrx/store';
 import { LoanReducer } from './store/reducers/loan.redusers';
+import { RemainingConvertPipe } from './pipes/remaining-convert.pipe';
 
 const materialModules = [
   MatCardModule,
@@ -22,7 +26,8 @@ const materialModules = [
   declarations: [
     AppComponent,
     InvestModalComponent,
-    AmountFormatPipe
+    AmountFormatPipe,
+    RemainingConvertPipe
   ],
   imports: [
     BrowserModule,

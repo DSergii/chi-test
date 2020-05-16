@@ -12,5 +12,5 @@
       <button mat-raised-button (click)="invest(loan)">Invest</button>
     </div>
   </mat-card>
-  <div class="total">Total amount available for investments: <b>&#163;{{total | amountFormat}}</b></div>
+  <div class="total">Total amount available for investments: <b>&#163;{{total$ | async | amountFormat}}</b></div>
 </div>

@@ -21,7 +21,15 @@
 
     .action-box {
       min-width: 100px;
+      display: flex;
+      flex-direction: column;
       text-align: right;
+
+      span {
+        display: block;
+        margin-bottom: 10px;
+        color: #4FA670;
+      }
     }
   }
   .total {

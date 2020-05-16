@@ -1,5 +1,7 @@
 import { Loan } from '../../models/loan.model';
 import { LoanActions, LoanActionTypes } from '../actions/loan.actions';
+import { createSelector } from '@ngrx/store';
+import { AppState } from '../../models/app-state.model';
 
 const initialState: Array<Loan> = [
   {
@@ -18,7 +20,7 @@ const initialState: Array<Loan> = [
     "tranche": "B",
     "available": "31,405",
     "annualised_return": "7.10",
-    "term_remaining": "1620000",
+    "term_remaining": "16200000",
     "ltv": "48.80",
     "amount": "85754"
   },
@@ -34,10 +36,16 @@ const initialState: Array<Loan> = [
   }
 ];
 
+export const countAmount = (state: AppState) => state.loans.reduce((prev, cur) => { return prev + parseFloat(cur.amount)}, 0);
+
+export const getTotal = () => createSelector(countAmount, (total) => {
+  return total ? total : 0;
+});
+
 export function LoanReducer(state: Array<Loan> = initialState, action: LoanActions) {
   switch (action.type) {
     case LoanActionTypes.LOAN_INVEST:
-      let index = state.map(item => item.id).indexOf(action.payload.id);
+      const index = state.findIndex(item => item.id === action.payload.id);
       return [
         ...state.slice(0, index),
         Object.assign({}, state[index], action.payload),
